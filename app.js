@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
+var cors = require('cors')
 var mongoose = require('mongoose');
 const PORT = 8000
 
 //negiiitkgp
 //mpkivvACCY7j4qRn
-
+app.use(cors)
 const MONGOURI = "mongodb+srv://negiiitkgp:mpkivvACCY7j4qRn@cluster0.fphlp3n.mongodb.net/?retryWrites=true&w=majority"
 
 //const password = "QWnpUArGYGmtKI4D"
