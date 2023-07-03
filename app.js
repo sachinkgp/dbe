@@ -6,7 +6,7 @@ const PORT = 8000
 
 //negiiitkgp
 //mpkivvACCY7j4qRn
-app.use(cors)
+app.use(cors())
 const MONGOURI = "mongodb+srv://negiiitkgp:mpkivvACCY7j4qRn@cluster0.fphlp3n.mongodb.net/?retryWrites=true&w=majority"
 
 //const password = "QWnpUArGYGmtKI4D"
