@@ -9,10 +9,6 @@ const ObjectId = mongoose.Types.ObjectId;
 // placeorder function takes a number of argument from frontend and create a
 // document in test databases in a collection named user
 router.post('/placeorder', (req, res) => {
-    // User.findOne({_id:req.body.id})
-    // .then((savedUser)=>{
-
-    // })
     const order_name = req.body.order_name;
     const order_quantity = req.body.order_quantity;
     const ordered_by = req.body.id;
@@ -24,13 +20,14 @@ router.post('/placeorder', (req, res) => {
     })
     order_temp.save()
         .then(orderData => {
-            const user = User.findOne({_id:ordered_by})
-            User.updateOne({ email: user.email }, { $push: { orders_placed: orderData._id } })
+            // const user = User.findOne({_id:ordered_by})
+            User.updateOne({_id:ordered_by}, { $push: { orders_placed: orderData._id } })
                 .then(userData => {
                     console.log(userData)
                     return res.json({ message: "order is placed successfully" })
                 })
     })
+    // User.updateOne({_id:localStorage.getItem("id")})
 })
 
 // fullfillorder gets ord_id and usr_id where order id is ord_id and user with user id
@@ -50,7 +47,6 @@ router.post('/placeorder', (req, res) => {
 router.get('/allliveorders', (req, res) => {
     Order.find({order_live:true})
         .then(orders => {
-            // console.log(orders)
             return res.json({ orders });
         })
 })
@@ -69,7 +65,7 @@ router.post('/userliveorder', (req, res) => {
 
 // userdeadorder recieves all order where user id is usr_id and
 // orders which are fullfilled
-router.get('/userdeadorder', (req, res) => {
+router.post('/userdeadorder', (req, res) => {
     const { usr_id } = req.body;
     Order.find({ ordered_by: usr_id, order_live: false })
         .then(orders => {
@@ -79,7 +75,7 @@ router.get('/userdeadorder', (req, res) => {
 
 // userfullfilleddorder gets an user id with value fllfld_usr_id
 // and returns all orders which are fullfilled by this user
-router.get('/userfullfilleddorder', (req, res) => {
+router.post('/userfullfilleddorder', (req, res) => {
     const { fllfld_usr_id } = req.body;
     Order.find({ fullfilled_by: fllfld_usr_id})
         .then(orders => {
